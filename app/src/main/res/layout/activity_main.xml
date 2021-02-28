@@ -170,7 +170,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="."
-            android:onClick="onDigit"
+            android:onClick="onDecimalPoint"
             android:layout_margin="2dp"/>
 
         <Button

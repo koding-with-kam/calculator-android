@@ -8,18 +8,34 @@ import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
+    // Contains info on last button pressed
+    var lastNumeric = false
+    var lastDot = false
+
+    private val tvInput: TextView = findViewById<TextView>(R.id.tvInput)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
 
     fun onDigit(view: View) {
-        val tvInput = findViewById<TextView>(R.id.tvInput)
+        this.lastNumeric = true
         tvInput.append((view as Button).text)
     }
 
     fun onClear(view: View) {
-        val tvInput = findViewById<TextView>(R.id.tvInput)
         tvInput.text = ""
+        this.lastNumeric = false
+        this.lastDot = false
+    }
+
+    fun onDecimalPoint(view: View) {
+        // If last input was a number and not a dot
+        if (this.lastNumeric && !this.lastDot) {
+            tvInput.append(".")
+            this.lastNumeric = false
+            this.lastDot = true
+        }
     }
 }
