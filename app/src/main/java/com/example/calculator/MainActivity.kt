@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import java.lang.ArithmeticException
 
 class MainActivity : AppCompatActivity() {
     // Contains info on last button pressed
@@ -46,6 +47,79 @@ class MainActivity : AppCompatActivity() {
             tvInput.append((view as Button).text)
             this.lastNumeric = false
             this.lastDot = false
+        }
+    }
+
+    fun onEqual(view: View) {
+        val tvInput: TextView = findViewById<TextView>(R.id.tvInput)
+
+        if (this.lastNumeric) {
+
+            var tvValue = tvInput.text.toString()
+            var prefix = ""
+            try {
+                // Handle negative case
+                if (tvValue.startsWith("-")) {
+                    prefix = "-"
+                    tvValue = tvValue.substring(1)
+                }
+                // Subtraction
+               if (tvValue.contains("-")) {
+                   val splitValue = tvValue.split("-")
+                   var one = splitValue[0]
+                   val two = splitValue[1]
+
+                   if (!prefix.isEmpty()) {
+                       one = prefix + one
+                   }
+                   tvInput.text = (one.toDouble() - two.toDouble()).toString()
+               }
+               // Addition
+               else if (tvValue.contains("+")) {
+                   val splitValue = tvValue.split("+")
+                   var one = splitValue[0]
+                   val two = splitValue[1]
+
+                   if (!prefix.isEmpty()) {
+                       one = prefix + one
+                   }
+
+                   tvInput.text = (one.toDouble() + two.toDouble()).toString()
+               }
+               // Multiplication
+               else if (tvValue.contains("*")) {
+                   val splitValue = tvValue.split("*")
+                   var one = splitValue[0]
+                   val two = splitValue[1]
+
+                   if (!prefix.isEmpty()) {
+                       one = prefix + one
+                   }
+
+                   tvInput.text = (one.toDouble() * two.toDouble()).toString()
+               }
+                // Division
+                else if (tvValue.contains("/")) {
+                   val splitValue = tvValue.split("/")
+                   var one = splitValue[0]
+                   val two = splitValue[1]
+
+                   if (!prefix.isEmpty()) {
+                       one = prefix + one
+                   }
+
+                   // If trying to divide by zero
+                   if (two.toDouble() == 0.0) {
+                       val toast = Toast.makeText(this, "Cant Divide By Zero!!!", Toast.LENGTH_LONG)
+                       toast.show()
+                   } else {
+                       tvInput.text = (one.toDouble() / two.toDouble()).toString()
+                   }
+
+               }
+            } catch (e: ArithmeticException) {
+                e.printStackTrace()
+            }
         }
     }
 
