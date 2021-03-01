@@ -21,11 +21,11 @@ class MainActivity : AppCompatActivity() {
 
     fun onDigit(view: View) {
         this.lastNumeric = true
-        tvInput.append((view as Button).text)
+        this.tvInput.append((view as Button).text)
     }
 
     fun onClear(view: View) {
-        tvInput.text = ""
+        this.tvInput.text = ""
         this.lastNumeric = false
         this.lastDot = false
     }
@@ -33,9 +33,29 @@ class MainActivity : AppCompatActivity() {
     fun onDecimalPoint(view: View) {
         // If last input was a number and not a dot
         if (this.lastNumeric && !this.lastDot) {
-            tvInput.append(".")
+            this.tvInput.append(".")
             this.lastNumeric = false
             this.lastDot = true
+        }
+    }
+
+    fun onOperator(view: View) {
+        if (this.lastNumeric && !isOperatorAdded(this.tvInput.text.toString())) {
+            this.tvInput.append((view as Button).text)
+            this.lastNumeric = false
+            this.lastDot = false
+        }
+    }
+
+    private fun isOperatorAdded(value: String): Boolean {
+        return if (value.startsWith("-")) {
+            false
+        } else {
+            value.contains("/") ||
+                    value.contains("*") ||
+                    value.contains("+") ||
+                    value.contains("-")
+
         }
     }
 }
