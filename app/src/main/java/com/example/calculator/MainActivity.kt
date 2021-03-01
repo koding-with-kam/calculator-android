@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                    if (!prefix.isEmpty()) {
                        one = prefix + one
                    }
-                   tvInput.text = (one.toDouble() - two.toDouble()).toString()
+                   tvInput.text = removeZeroAfterDecimal((one.toDouble() - two.toDouble()).toString())
                }
                // Addition
                else if (tvValue.contains("+")) {
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                        one = prefix + one
                    }
 
-                   tvInput.text = (one.toDouble() + two.toDouble()).toString()
+                   tvInput.text = removeZeroAfterDecimal((one.toDouble() + two.toDouble()).toString())
                }
                // Multiplication
                else if (tvValue.contains("*")) {
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                        one = prefix + one
                    }
 
-                   tvInput.text = (one.toDouble() * two.toDouble()).toString()
+                   tvInput.text = removeZeroAfterDecimal((one.toDouble() * two.toDouble()).toString())
                }
                 // Division
                 else if (tvValue.contains("/")) {
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                        val toast = Toast.makeText(this, "Cant Divide By Zero!!!", Toast.LENGTH_LONG)
                        toast.show()
                    } else {
-                       tvInput.text = (one.toDouble() / two.toDouble()).toString()
+                       tvInput.text = removeZeroAfterDecimal((one.toDouble() / two.toDouble()).toString())
                    }
 
                }
@@ -121,6 +121,15 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+    }
+
+    private fun removeZeroAfterDecimal(result: String): String {
+        var value = result
+        if (result.contains(".0")) {
+            value = result.substring(0, result.length - 2)
+        }
+
+        return value
     }
 
     private fun isOperatorAdded(value: String): Boolean {
