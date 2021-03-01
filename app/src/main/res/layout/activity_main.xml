@@ -13,6 +13,7 @@
         android:layout_height="250dp"
         android:background="@color/backgroundColor"
         android:textSize="48sp"
+        android:gravity="end|bottom|center"
         android:maxLength="12"/>
 
     <!-- Row 1 -->
