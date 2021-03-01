@@ -12,8 +12,6 @@ class MainActivity : AppCompatActivity() {
     var lastNumeric = false
     var lastDot = false
 
-    private val tvInput: TextView = findViewById<TextView>(R.id.tvInput)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,27 +19,31 @@ class MainActivity : AppCompatActivity() {
 
     fun onDigit(view: View) {
         this.lastNumeric = true
-        this.tvInput.append((view as Button).text)
+        val tvInput: TextView = findViewById<TextView>(R.id.tvInput)
+        tvInput.append((view as Button).text)
     }
 
     fun onClear(view: View) {
-        this.tvInput.text = ""
+        val tvInput: TextView = findViewById<TextView>(R.id.tvInput)
+        tvInput.text = ""
         this.lastNumeric = false
         this.lastDot = false
     }
 
     fun onDecimalPoint(view: View) {
+        val tvInput: TextView = findViewById<TextView>(R.id.tvInput)
         // If last input was a number and not a dot
         if (this.lastNumeric && !this.lastDot) {
-            this.tvInput.append(".")
+            tvInput.append(".")
             this.lastNumeric = false
             this.lastDot = true
         }
     }
 
     fun onOperator(view: View) {
-        if (this.lastNumeric && !isOperatorAdded(this.tvInput.text.toString())) {
-            this.tvInput.append((view as Button).text)
+        val tvInput: TextView = findViewById<TextView>(R.id.tvInput)
+        if (this.lastNumeric && !isOperatorAdded(tvInput.text.toString())) {
+            tvInput.append((view as Button).text)
             this.lastNumeric = false
             this.lastDot = false
         }
